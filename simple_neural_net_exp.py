@@ -43,7 +43,7 @@ def model():
 
 model = model()
 
-model.fit(X_train, y_train, epochs=200, verbose=False)    # NOTE: epochs are increased because of limited data.
+model.fit(X_train, y_train, epochs=150, verbose=False)    # NOTE: epochs are increased because of limited data.
 
 print('Loss: {:.2f}'.format(model.evaluate(X_train, y_train, verbose=False)))
 
@@ -64,5 +64,16 @@ def test():
         print(np.array([random_num, round(pred)]), output)
 
 test()
+
+# %% [markdown]
+# #### Plot the results
+
+# %%
+slope = model.get_weights()[0][0]
+intercept = model.get_weights()[1]
+
+plt.plot(X_train, X_train * slope + intercept)
+plt.scatter(X_train, y_train)
+print(slope, intercept)
 
 
