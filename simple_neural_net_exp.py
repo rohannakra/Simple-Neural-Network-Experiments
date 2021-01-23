@@ -43,7 +43,7 @@ def model():
 
 model = model()
 
-model.fit(X_train, y_train, epochs=150, verbose=False)    # NOTE: epochs are increased because of limited data.
+results = model.fit(X_train, y_train, epochs=150, verbose=False)    # NOTE: epochs are increased because of limited data.
 
 print('Loss: {:.2f}'.format(model.evaluate(X_train, y_train, verbose=False)))
 
@@ -69,11 +69,22 @@ test()
 # #### Plot the results
 
 # %%
+fig, (ax_1, ax_2) = plt.subplots(1, 2, figsize=(10, 5))
+
 slope = model.get_weights()[0][0]
 intercept = model.get_weights()[1]
 
-plt.plot(X_train, X_train * slope + intercept)
-plt.scatter(X_train, y_train)
-print(slope, intercept)
+ax_1.plot(X_train, X_train * slope + intercept)
+ax_1.scatter(X_train, y_train)
+
+slope = '{:.2}'.format(slope[0])
+intercept = '{:.2}'.format(intercept[0])
+
+print('{:^4} {:^4}'.format(slope, intercept))
+print('{:^4} {:^4}'.format(2, -1))
+
+ax_2.plot(results.history['loss'])
+ax_2.set_xlabel('epoch')
+ax_2.set_ylabel('loss')
 
 
